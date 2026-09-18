@@ -36,6 +36,7 @@ public class Case01 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
+		webDriver.get("http://localhost:8080/lms");
 	}
 
 }
