@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -45,13 +46,14 @@ public class Case01 {
 		// // URLでログインページにアクセス
 		webDriver.get("http://localhost:8080/lms");
 
-		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
+		assertEquals("ログイン | LMS", webDriver.getTitle());
 
 		// 開いたページのキャプチャを取得する
 		File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
 
 		//screenshotsフォルダに保存
-		Files.copy(file.toPath(), Paths.get("./src/main/sample01.png"));
+		Files.copy(file.toPath(), Paths.get("./src/main/sample01.png"),
+				StandardCopyOption.REPLACE_EXISTING);
 	}
 
 }
