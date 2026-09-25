@@ -3,11 +3,6 @@ package jp.co.sss.lms.ct.f01_login1;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -15,8 +10,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト ログイン機能①
@@ -42,18 +37,15 @@ public class Case01 {
 	@Test
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
-	void test01() throws Exception {
+	void test01() {
 		// // URLでログインページにアクセス
 		webDriver.get("http://localhost:8080/lms");
 
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 
 		// 開いたページのキャプチャを取得する
-		File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-
-		//screenshotsフォルダに保存
-		Files.copy(file.toPath(), Paths.get("./src/main/sample01.png"),
-				StandardCopyOption.REPLACE_EXISTING);
+		WebDriverUtils.getEvidence(new Object() {
+		}, "login_page");
 	}
 
 }

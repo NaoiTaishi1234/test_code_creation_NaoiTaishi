@@ -3,11 +3,6 @@ package jp.co.sss.lms.ct.f01_login1;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +11,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト ログイン機能①
@@ -48,12 +43,16 @@ public class Case02 {
 		webDriver.get("http://localhost:8080/lms");
 
 		assertEquals("ログイン | LMS", webDriver.getTitle());
+
+		// 開いたページのキャプチャを取得する
+		WebDriverUtils.getEvidence(new Object() {
+		}, "login_page");
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
-	void test02() throws Exception {
+	void test02() {
 		// 存在しないユーザーID、パスワード入力
 		webDriver.findElement(By.id("loginId")).sendKeys("Stadantaa58");
 		webDriver.findElement(By.id("password")).sendKeys("Stadantaa58");
@@ -66,11 +65,8 @@ public class Case02 {
 				webDriver.findElement(By.cssSelector("span.help-inline.error")).getText());
 
 		// 開いたページのキャプチャを取得する
-		File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-
-		//screenshotsフォルダに保存
-		Files.copy(file.toPath(), Paths.get("./src/main/sample02.png"),
-				StandardCopyOption.REPLACE_EXISTING);
+		WebDriverUtils.getEvidence(new Object() {
+		}, "login_fail");
 	}
 
 }
