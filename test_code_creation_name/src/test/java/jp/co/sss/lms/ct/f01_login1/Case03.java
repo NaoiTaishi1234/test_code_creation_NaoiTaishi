@@ -46,26 +46,24 @@ public class Case03 {
 
 		// 開いたページのキャプチャを取得する
 		WebDriverUtils.getEvidence(new Object() {
-		}, "_03_login_page");
+		}, "login_page");
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// 初回ログイン済みのユーザーID、パスワード入力
-		webDriver.findElement(By.id("loginId")).sendKeys("StudantAA01");
-		webDriver.findElement(By.id("password")).sendKeys("StudantAA01");
-
+		// 登録済のユーザーID、パスワード入力
+		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA09");
+		webDriver.findElement(By.id("password")).sendKeys("StudentAA09a");
 		// ログインボタンを押す
 		webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']")).click();
 
 		// コース詳細画面に遷移できているか
-		assertEquals(" | LMS", webDriver.getTitle());
-
-		// 開いたページのキャプチャを取得する
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 		WebDriverUtils.getEvidence(new Object() {
-		}, "login_clear");
+		}, "login_success");
+
 	}
 
 }
