@@ -3,6 +3,8 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -88,8 +90,16 @@ public class Case04 {
 		//
 		webDriver.findElement(By.cssSelector("a[href$='/faq']")).click();
 
+		//クリック前のタブIDを取得
+		String originalWindow = webDriver.getWindowHandle();
+		// ブラウザで開いているすべてのタブID一覧を取得し、元のタブを削除
+		Set<String> handles = webDriver.getWindowHandles();
+		handles.remove(originalWindow);
+		//新しいタブへ操作を切り替える
+		webDriver.switchTo().window(handles.iterator().next());
+
 		//よくある質問ページを別タブで開けたか
-		assertEquals("ヘルプ | LMS", webDriver.getTitle());
+		assertEquals("よくある質問 | LMS", webDriver.getTitle());
 		WebDriverUtils.getEvidence(new Object() {
 		}, "question_page");
 	}
